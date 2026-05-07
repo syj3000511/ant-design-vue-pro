@@ -58,7 +58,7 @@ const vueConfig = {
 
   chainWebpack: config => {
     config.resolve.alias.set('@$', resolve('src'))
-    
+
     // Ignore moment.js locale files to reduce bundle size (webpack 5 compatible)
     config.resolve.alias.set('moment/locale', false)
 
@@ -123,7 +123,7 @@ const vueConfig = {
 
   devServer: {
     // development server port 8000
-    port: 8000,
+    port: 8000
     // If you want to turn on the proxy, please remove the mockjs /src/main.jsL11
     // proxy: {
     //   '/api': {

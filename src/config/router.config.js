@@ -202,6 +202,42 @@ export const asyncRouterMap = [
         ]
       },
 
+      // system
+      {
+        path: '/system',
+        name: 'system',
+        component: RouteView,
+        redirect: '/system/user',
+        meta: { title: 'menu.system', icon: 'setting', permission: ['system'] },
+        children: [
+          {
+            path: '/system/user',
+            name: 'UserList',
+            component: () => import('@/views/system/user/UserList'),
+            meta: { title: 'menu.system.user', keepAlive: true, permission: ['system'] }
+          },
+          {
+            path: '/system/role',
+            name: 'RoleList',
+            component: () => import('@/views/system/role/RoleList'),
+            meta: { title: 'menu.system.role', keepAlive: true, permission: ['system'] }
+          },
+          {
+            path: '/system/permission',
+            name: 'PermissionList',
+            component: () => import('@/views/system/permission/PermissionList'),
+            meta: { title: 'menu.system.permission', keepAlive: true, permission: ['system'] }
+          },
+          {
+            path: '/system/dict',
+            name: 'DictList',
+            component: () => import('@/views/system/dict/DictList'),
+            meta: { title: 'menu.system.dict', keepAlive: true, permission: ['system'] }
+          }
+
+        ]
+      },
+
       // account
       {
         path: '/account',

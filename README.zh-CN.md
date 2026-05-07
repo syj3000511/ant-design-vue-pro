@@ -33,8 +33,8 @@ An out-of-box UI solution for enterprise applications as a Vue boilerplate. base
 
 ## 环境和依赖
 
-- node
-- yarn
+- node (18.18.0)
+- pnpm
 - webpack
 - eslint
 - @vue/cli
@@ -43,7 +43,8 @@ An out-of-box UI solution for enterprise applications as a Vue boilerplate. base
 - [@antv/g2](https://antv.alipay.com/zh-cn/index.html) - Alipay AntV 数据可视化图表
 - [Viser-vue](https://viserjs.github.io/docs.html#/viser/guide/installation) - antv/g2 封装实现
 
-> 请注意，我们强烈建议本项目使用 [Yarn](https://yarnpkg.com/) 包管理工具，这样可以与本项目演示站所加载完全相同的依赖版本 (yarn.lock) 。由于我们没有对依赖进行强制的版本控制，采用非 yarn 包管理进行引入时，可能由于 Pro 所依赖的库已经升级版本而引入了新版本所导致的问题。作者可能会由于时间问题无法及时排查而导致您采用本项目作为基项目而出现问题。
+> [!IMPORTANT]
+> 本项目已通过 `.npmrc` 锁定 Node 版本（18.18.0）。我们强烈建议使用 [pnpm](https://pnpm.io/)，它会自动加载并管理该受管环境。建议通过 `pnpm run <command>` 或 `pnpm exec <command>` 运行指令，以确保环境一致性。
 
 ## 项目下载和运行
 
@@ -57,25 +58,25 @@ cd ant-design-vue-pro
 - 安装依赖
 
 ```
-yarn install
+pnpm install
 ```
 
 - 开发模式运行
 
 ```
-yarn run serve
+
 ```
 
 - 编译项目
 
 ```
-yarn run build
+pnpm run build
 ```
 
 - Lints and fixes files
 
 ```
-yarn run lint
+pnpm run lint
 ```
 
 ## 其他说明

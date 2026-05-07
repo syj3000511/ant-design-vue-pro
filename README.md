@@ -31,8 +31,8 @@ An out-of-box UI solution for enterprise applications as a Vue boilerplate. base
 
 ### Env and dependencies
 
-- node
-- yarn
+- node (18.18.0)
+- pnpm
 - webpack
 - eslint
 - @vue/cli
@@ -41,7 +41,8 @@ An out-of-box UI solution for enterprise applications as a Vue boilerplate. base
 - [@antv/g2](https://antv.alipay.com/zh-cn/index.html) - AntV G2
 - [Viser-vue](https://viserjs.github.io/docs.html#/viser/guide/installation) - Antv/G2 of Vue
 
-> Note: [Yarn](https://yarnpkg.com/) package management is recommended, the exact same version loaded with the demo site of this project (yarn.lock) . but you can also use npm
+> [!IMPORTANT]
+> The project locks Node version to 18.18.0 via `.npmrc`. We highly recommend using [pnpm](https://pnpm.io/), which automatically manages and loads this environments. Use `pnpm run <command>` or `pnpm exec <command>` for consistency.
 
 ### Project setup
 
@@ -55,25 +56,25 @@ cd ant-design-vue-pro
 - Install dependencies
 
 ```
-yarn install
+pnpm install
 ```
 
 - Compiles and hot-reloads for development
 
 ```
-yarn run serve
+pnpm run serve
 ```
 
 - Compiles and minifies for production
 
 ```
-yarn run build
+pnpm run build
 ```
 
 - Lints and fixes files
 
 ```
-yarn run lint
+pnpm run lint
 ```
 
 ### Other

@@ -415,6 +415,47 @@ const info = options => {
         ],
         actionList: null,
         dataAccess: null
+      },
+      {
+        roleId: 'admin',
+        permissionId: 'system',
+        permissionName: '系统管理',
+        actions:
+          '[{"action":"add","defaultCheck":false,"describe":"新增"},{"action":"import","defaultCheck":false,"describe":"导入"},{"action":"get","defaultCheck":false,"describe":"详情"},{"action":"update","defaultCheck":false,"describe":"修改"},{"action":"delete","defaultCheck":false,"describe":"删除"},{"action":"export","defaultCheck":false,"describe":"导出"}]',
+        actionEntitySet: [
+          {
+            action: 'add',
+            describe: '新增',
+            defaultCheck: false
+          },
+          {
+            action: 'import',
+            describe: '导入',
+            defaultCheck: false
+          },
+          {
+            action: 'get',
+            describe: '详情',
+            defaultCheck: false
+          },
+          {
+            action: 'update',
+            describe: '修改',
+            defaultCheck: false
+          },
+          {
+            action: 'delete',
+            describe: '删除',
+            defaultCheck: false
+          },
+          {
+            action: 'export',
+            describe: '导出',
+            defaultCheck: false
+          }
+        ],
+        actionList: null,
+        dataAccess: null
       }
     ]
   }
@@ -772,6 +813,50 @@ const userNav = options => {
       },
       redirect: '/account/center',
       component: 'RouteView'
+    },
+
+    // system
+    {
+      name: 'system',
+      parentId: 0,
+      id: 10040,
+      meta: {
+        title: 'menu.system',
+        icon: 'setting',
+        show: true
+      },
+      redirect: '/system/user',
+      component: 'RouteView'
+    },
+    {
+      name: 'user',
+      parentId: 10040,
+      id: 10041,
+      meta: {
+        title: 'menu.system.user',
+        show: true
+      },
+      component: 'UserList'
+    },
+    {
+      name: 'permission',
+      parentId: 10040,
+      id: 10042,
+      meta: {
+        title: 'menu.system.permission',
+        show: true
+      },
+      component: 'PermissionList'
+    },
+    {
+      name: 'dict',
+      parentId: 10040,
+      id: 10043,
+      meta: {
+        title: 'menu.system.dict',
+        show: true
+      },
+      component: 'DictList'
     },
     {
       name: 'center',

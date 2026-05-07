@@ -1,0 +1,108 @@
+@import (css) 'https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Fira+Sans:wght@300;400;500;600&display=swap';
+
+// Design Tokens (Precision Industrial Mode)
+@xbom-primary-color: #003a8c; // Industrial Navy Blue
+@xbom-accent-color: #1890ff; // Professional Blue
+@xbom-success-color: #52c41a;
+@xbom-warning-color: #faad14;
+@xbom-error-color: #f5222d;
+@xbom-bg-color: #f0f2f5;
+@xbom-muted-color: #8c8c8c;
+@xbom-border-radius: 2px; // 极简直角，体现工业严谨
+@xbom-panel-bg: #ffffff;
+@xbom-border-color: #d9d9d9;
+
+// Utility Classes
+.xbom-glass-card {
+  background: @xbom-panel-bg;
+  border: 1px solid @xbom-border-color;
+  border-radius: @xbom-border-radius;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  transition: all 0.2s ease;
+
+  :deep(.ant-card-body) {
+    padding: 16px !important;
+  }
+
+  &:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border-color: @xbom-accent-color;
+  }
+}
+
+.xbom-tech-font {
+  font-family: 'Fira Code', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.xbom-body-font {
+  font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+// Global Customizations for Ant Design (Industrial Overrides)
+.ant-card {
+  border-radius: @xbom-border-radius;
+}
+
+.ant-form-item {
+  margin-bottom: 8px !important; // 更紧凑的工业表单
+}
+
+.ant-btn {
+  border-radius: @xbom-border-radius;
+  font-weight: 500;
+  
+  &-primary {
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+  }
+}
+
+.ant-tag {
+  border-radius: 2px;
+  border: 1px solid transparent;
+  font-weight: 500;
+}
+
+.ant-table-thead > tr > th {
+  background: #fafafa !important;
+  border-bottom: 2px solid #f0f0f0 !important;
+  color: #262626;
+  font-weight: 600;
+}
+
+.ant-table-row {
+  &:hover {
+    background-color: #f0f5ff !important;
+  }
+}
+
+// Modal & Form Enhancements
+.xbom-glass-modal {
+  .ant-modal-content {
+    background: #fff;
+    border-radius: @xbom-border-radius;
+    box-shadow: 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .ant-modal-header {
+    background: #fafafa;
+    border-bottom: 1px solid #f0f0f0;
+    padding: 12px 24px;
+    
+    .ant-modal-title {
+      font-weight: 600;
+      color: @xbom-primary-color;
+      font-size: 15px;
+    }
+  }
+}
+
+.ant-input, .ant-select-selection, .ant-input-number {
+  border-radius: @xbom-border-radius !important;
+  border-color: @xbom-border-color !important;
+  
+  &:focus, &-focused {
+    border-color: @xbom-accent-color !important;
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1) !important;
+  }
+}
+
