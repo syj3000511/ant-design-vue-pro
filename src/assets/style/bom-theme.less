@@ -1,0 +1,180 @@
+/**
+ * BOM 编辑器节点状态样式（对应设计文档第 4 节）。
+ * 通过 a-table 的 :rowClassName 把状态类挂到 <tr> 上。
+ */
+
+@bom-state-added-bg: #e6f4ea;
+@bom-state-added-text: #137333;
+@bom-state-added-border: #1b7a43;
+
+@bom-state-modified-bg: #fef7e0;
+@bom-state-modified-text: #b06000;
+@bom-state-modified-border: #f9a825;
+
+@bom-state-deleted-bg: #fce8e6;
+@bom-state-deleted-text: #c5221f;
+@bom-state-deleted-border: #d93025;
+
+/* 图例色块用稍深的底色，使「图例」比表格行底色更醒目、易辨识 */
+@bom-legend-added-bg: #b7e1c4;
+@bom-legend-modified-bg: #fbe2a0;
+@bom-legend-deleted-bg: #f6c4be;
+@bom-legend-selected-bg: #bae0ff;
+@bom-legend-unchanged-bg: #ffffff;
+
+.bom-node-state-added > td {
+  color: @bom-state-added-text;
+  background-color: @bom-state-added-bg !important;
+}
+
+.bom-node-state-modified > td {
+  color: @bom-state-modified-text;
+  background-color: @bom-state-modified-bg !important;
+}
+
+.bom-node-state-deleted > td {
+  color: @bom-state-deleted-text;
+  text-decoration: line-through;
+  background-color: @bom-state-deleted-bg !important;
+  opacity: .6;
+}
+
+/* 选中行高亮（左右两树共用）：用左侧细描边 + 浅蓝底，区别于状态底色 */
+.bom-row-selected > td {
+  background-color: #e6f7ff !important;
+}
+
+/* 颜色图例：说明编辑区各底色含义（去掉单元格竖条后，靠底色 + 图例理解状态） */
+.bom-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: rgb(0 0 0 / 65%);
+  background: #fafafa;
+  border: 1px solid #f0f0f0;
+  border-bottom: none;
+}
+
+/* 图例作为编辑区上方的独立条：四周完整描边、与下方比对区留出间距，
+   不嵌入任一树表内部，故不会影响左右两表的行对齐（需求点 1 / 2） */
+.bom-legend--bar {
+  margin-bottom: 12px;
+  border-bottom: 1px solid #f0f0f0;
+  border-radius: 2px;
+}
+
+.bom-legend__label {
+  font-weight: 600;
+  color: rgb(0 0 0 / 85%);
+}
+
+.bom-legend__item {
+  display: inline-flex;
+  align-items: center;
+}
+
+.bom-legend__swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-right: 6px;
+  vertical-align: middle;
+  border: 1px solid rgb(0 0 0 / 18%);
+  border-radius: 2px;
+}
+
+.bom-legend__swatch--added {
+  background-color: @bom-legend-added-bg;
+}
+
+.bom-legend__swatch--modified {
+  background-color: @bom-legend-modified-bg;
+}
+
+.bom-legend__swatch--deleted {
+  background-color: @bom-legend-deleted-bg;
+}
+
+.bom-legend__swatch--unchanged {
+  background-color: @bom-legend-unchanged-bg;
+}
+
+.bom-legend__swatch--selected {
+  background-color: @bom-legend-selected-bg;
+}
+
+/* 四栏横向布局容器：导航栏 → 原结构树表 → 编辑区树表 → 侧边栏 */
+.bom-comparison-container {
+  display: flex;
+
+  /* 固定从左到右排列、绝不换行（R11.1） */
+  flex-wrap: nowrap;
+  gap: 12px;
+  align-items: stretch;
+  width: 100%;
+
+  /* 视口宽度不足时由容器提供横向滚动，各栏保持顺序与互不重叠（R11.5 / R11.6） */
+  overflow-x: auto;
+}
+
+/* 导航栏列：固定宽度、不参与收缩，保证最左侧位置与不被挤压（R1.1 / R11.1） */
+.bom-comparison-container > .bom-navigation-panel {
+  flex: 0 0 280px;
+}
+
+.bom-tree-panel {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+
+  /* 给树表设定最小宽度：保证两表公共列可完整展示并对齐，
+     且当容器变窄到容纳不下时触发容器横向滚动而非互相挤压（R11.2 / R11.6） */
+  min-width: 480px;
+
+  .bom-tree-panel__title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    font-weight: 600;
+    background: #fafafa;
+    border: 1px solid #f0f0f0;
+    border-bottom: none;
+  }
+}
+
+/* 侧边栏外层包裹：负责 300ms 显隐过渡；隐藏时宽度归零，把横向空间归还主编辑区（R7.6 / R7.8） */
+.bom-sidebar-wrapper {
+  flex: 0 0 300px;
+  overflow: hidden;
+  transition: flex-basis .3s ease, opacity .3s ease, margin-left .3s ease;
+}
+
+.bom-sidebar-wrapper--hidden {
+  flex-basis: 0;
+  margin-left: -12px; /* 抵消容器 gap，彻底归还横向空间 */
+  opacity: 0;
+}
+
+.bom-side-panel {
+  width: 100%;
+
+  /* 折叠过渡期间保持内容宽度，避免文本被挤压重排（由外层 overflow 裁剪） */
+  min-width: 280px;
+  border: 1px solid #f0f0f0;
+}
+
+.bom-transform-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 0;
+
+  .bom-transform-bar__hint {
+    margin-left: 12px;
+    color: rgb(0 0 0 / 45%);
+  }
+}

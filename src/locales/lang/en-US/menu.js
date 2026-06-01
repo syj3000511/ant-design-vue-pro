@@ -5,6 +5,8 @@ export default {
     'menu.dashboard.analysis': 'Analysis',
     'menu.dashboard.monitor': 'Monitor',
     'menu.dashboard.workplace': 'Workplace',
+    'menu.bom': 'BOM',
+    'menu.bom.editor': 'BOM Editor',
     'menu.form': 'Form',
     'menu.form.basic-form': 'Basic Form',
     'menu.form.step-form': 'Step Form',

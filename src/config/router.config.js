@@ -43,6 +43,22 @@ export const asyncRouterMap = [
           }
         ]
       },
+      // BOM 编辑器与比对
+      {
+        path: '/bom',
+        name: 'bom',
+        redirect: '/bom/editor',
+        component: RouteView,
+        meta: { title: 'menu.bom', icon: 'cluster', permission: ['dashboard'] },
+        children: [
+          {
+            path: '/bom/editor',
+            name: 'BomEditorView',
+            component: () => import('@/views/bom/BomEditorView'),
+            meta: { title: 'menu.bom.editor', keepAlive: false, permission: ['dashboard'] }
+          }
+        ]
+      },
       // forms
       {
         path: '/form',

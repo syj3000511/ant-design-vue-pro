@@ -5,6 +5,8 @@ export default {
     'menu.dashboard.analysis': '分析页',
     'menu.dashboard.monitor': '监控页',
     'menu.dashboard.workplace': '工作台',
+    'menu.bom': 'BOM 编辑',
+    'menu.bom.editor': 'BOM 编辑与比对',
     'menu.form': '表单页',
     'menu.form.basic-form': '基础表单',
     'menu.form.step-form': '分步表单',

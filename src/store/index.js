@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 
 import app from './modules/app'
 import user from './modules/user'
+import bomTree from './modules/bomTree'
+import bomNodeState from './modules/bomNodeState'
 
 // default router permission control
 // 默认路由模式为静态路由 (router.config.js)
@@ -20,7 +22,9 @@ export default new Vuex.Store({
   modules: {
     app,
     user,
-    permission
+    permission,
+    bomTree,
+    bomNodeState
   },
   state: {},
   mutations: {},
