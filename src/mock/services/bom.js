@@ -1,5 +1,6 @@
 import Mock from 'mockjs2'
 import { builder, getBody } from '../util'
+import { findNodeById } from '@/components/BomEditor/treeUtils'
 
 /**
  * BOM 编辑器与比对 Mock 服务。
@@ -303,17 +304,62 @@ Mock.mock(/\/sbom\/delete/, 'post', (options) => {
   return builder({ success: true, deletedLinkId: body.linkId, newParentStructureVersion: nextId('sv'), operationId: body.operationId })
 })
 
+const convertSubtreeToTarget = (node, parentPartNumber, targetViewType) => {
+  const ts = now()
+  const partTypes = PART_TYPE_MAP[targetViewType] || PART_TYPE_MAP.EBOM
+  const seqNo = ++seq
+  
+  const targetNode = {
+    id: `N-${seqNo}`,
+    partId: `P-${seqNo}`,
+    partNumber: node.partNumber,
+    name: node.name,
+    parentPartNumber: parentPartNumber || '',
+    quantity: node.quantity || 1,
+    effectivity: node.effectivity || 'MSN001-MSN050',
+    viewType: targetViewType,
+    bomType: targetViewType,
+    status: 'InWork',
+    version: 'A.1',
+    updateTime: ts,
+    structureVersion: `sv-${seqNo}`,
+    rowState: 'Added',
+    attributes: { partType: partTypes[seqNo % partTypes.length] },
+    children: []
+  }
+  
+  if (Array.isArray(node.children)) {
+    targetNode.children = node.children.map(child => 
+      convertSubtreeToTarget(child, node.partNumber, targetViewType)
+    )
+  }
+  
+  return targetNode
+}
+
 Mock.mock(/\/sbom\/transform/, 'post', (options) => {
   const body = getBody(options) || {}
-  // 重构（EBOM → SBOM）保持件号与名称与源节点一致（仅视图类型切换为 SBOM），
-  // 避免出现「重构过去后名字变了」的问题。源节点件号 / 名称由前端在请求中携带。
-  return builder({
-    success: true,
-    newNode: {
+  
+  // 1. 获取原结构树并查找到源节点
+  const srcTree = buildSourceTree('EBOM')
+  const sourceNode = findNodeById(srcTree, body.sourceNodeId)
+  
+  // 2. 递归克隆并转换整个子树
+  let newNode
+  if (sourceNode) {
+    newNode = convertSubtreeToTarget(sourceNode, body.targetParentPartNumber, 'SBOM')
+  } else {
+    // 降级防崩
+    newNode = {
       ...makeNewNode('SBOM', body.sourcePartNumber, body.targetParentPartNumber),
       name: body.sourceName || '重构节点',
       rowState: 'Added'
-    },
+    }
+  }
+
+  return builder({
+    success: true,
+    newNode,
     newParentStructureVersion: nextId('sv'),
     operationId: body.operationId
   })

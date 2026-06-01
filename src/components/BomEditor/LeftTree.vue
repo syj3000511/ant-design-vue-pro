@@ -4,12 +4,7 @@
       <span>原结构（已发布 · 只读）</span>
       <a-tag v-if="sourceViewType" color="blue">{{ sourceViewType }}</a-tag>
     </div>
-    <!-- 未激活导航联动时显示引导提示 -->
-    <div v-if="!navLinkActive" class="bom-tree-panel__placeholder">
-      <a-empty description="请点击左侧导航树节点以查看对应结构" :image="simpleImage" />
-    </div>
     <a-table
-      v-else
       ref="table"
       :columns="columns"
       :dataSource="displayData"

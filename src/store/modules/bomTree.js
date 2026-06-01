@@ -98,21 +98,30 @@ const bomTree = {
     setContext ({ commit }, context) {
       commit('SET_CONTEXT', context)
     },
+    refreshNavSelection ({ dispatch, state }) {
+      if (state.selectedNavNode) {
+        dispatch('selectNavNode', state.selectedNavNode)
+      }
+    },
     /** 在 parentId 下插入新节点 */
-    insertNode ({ commit, state }, { parentId, node }) {
+    insertNode ({ commit, state, dispatch }, { parentId, node }) {
       commit('SET_TARGET_TREE', insertChild(state.targetTreeData, parentId, node))
+      dispatch('refreshNavSelection')
     },
     /** 合并更新节点字段 */
-    patchNode ({ commit, state }, { id, patch }) {
+    patchNode ({ commit, state, dispatch }, { id, patch }) {
       commit('SET_TARGET_TREE', updateNodeImmutable(state.targetTreeData, id, patch))
+      dispatch('refreshNavSelection')
     },
     /** 用整个新节点替换同 id 节点 */
-    replaceNode ({ commit, state }, node) {
+    replaceNode ({ commit, state, dispatch }, node) {
       commit('SET_TARGET_TREE', replaceNodeImmutable(state.targetTreeData, node))
+      dispatch('refreshNavSelection')
     },
     /** 软删除（标记为 Deleted 以供比对展示） */
-    softDeleteNode ({ commit, state }, id) {
+    softDeleteNode ({ commit, state, dispatch }, id) {
       commit('SET_TARGET_TREE', markNodeDeleted(state.targetTreeData, id))
+      dispatch('refreshNavSelection')
     },
     /**
      * 应用一次「撤销」的逆操作，真正回退编辑区树（修复「撤销不生效」问题）。
@@ -126,13 +135,14 @@ const bomTree = {
      * 用同一快照还原两次结果一致）。
      * @param {object} undo 逆操作描述符 { inserted, nodeId, snapshot }
      */
-    applyUndo ({ commit, state }, undo) {
+    applyUndo ({ commit, state, dispatch }, undo) {
       if (!undo) return
       if (undo.inserted) {
         commit('SET_TARGET_TREE', removeNodeImmutable(state.targetTreeData, undo.nodeId))
       } else if (undo.snapshot) {
         commit('SET_TARGET_TREE', replaceNodeImmutable(state.targetTreeData, undo.snapshot))
       }
+      dispatch('refreshNavSelection')
     },
     recordOperation ({ commit }, op) {
       commit('PUSH_OPERATION', op)
